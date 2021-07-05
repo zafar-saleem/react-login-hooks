@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUserAction } from '../actions/authenticationActions';
 
 const RegisterPage = () => {
-  const [isSuccess, setSuccess] = useState(false);
-  const [message, setMessage] = useState('');
+  const [success, setSuccess] = useState(false);
+  const [notification, setNotification] = useState('');
   const dispatch = useDispatch();
   const register = useSelector(state => state.register.response);
 
   useEffect(() => {
     if (register !== undefined) {
       setSuccess(register.success);
-      setMessage(register.message);
+      setNotification(register.message);
     }
   }, [register]);
 
@@ -31,10 +31,14 @@ const RegisterPage = () => {
     }));
   }
 
+  useEffect(() => {
+    setNotification('');
+  }, []);
+
   return (
     <div>
       <h3>RegisterPage</h3>
-      {(!isSuccess || isSuccess) ? <div>{message}</div> : ''}
+      {(!success || success) ? <div>{notification}</div> : ''}
       <form onSubmit={onHandleRegistration}>
         <div>
           <label htmlFor="name">Name</label>

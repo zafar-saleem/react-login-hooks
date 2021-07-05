@@ -7,15 +7,19 @@ import { setCookie } from '../utils/cookies';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { message = '', success = false, token = '' } = useSelector(state => state.login.response || {});
+  const [notification, setNotification] = useState('');
+  const [success, setSuccess] = useState(false);
+  const login = useSelector(state => state.login.response);
 
   useEffect(() => {
-    if (message !== undefined && success !== undefined) {
-      if (success) {
-        setCookie('token', token, 1);
+    if (login !== undefined) {
+      setNotification(login.message);
+      setSuccess(login.success);
+      if (login.success) {
+        setCookie('token', login.token, 1);
       }
     }
-  }, [message, success, token]);
+  }, [login]);
 
   const onHandleLogin = (event) => {
     event.preventDefault();
@@ -28,10 +32,15 @@ const LoginPage = () => {
     }));
   }
 
+  useEffect(() => {
+    setNotification('');
+    setSuccess(false);
+  }, []);
+
   return (
     <div>
       <h3>Login Page</h3>
-      {(!success) ? <div>{message}</div> : <Redirect to='dashboard' />}
+      {(!success) ? <div>{notification}</div> : <Redirect to='dashboard' />}
       <form onSubmit={onHandleLogin}>
         <div>
           <label htmlFor="email">Email</label>
