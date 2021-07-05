@@ -1,5 +1,7 @@
 # User Authentication using react hooks
 
+Note: This is a sample project for my blog on medium which can be found [here](https://medium.com/@zafarsaleem/authentication-using-react-react-hooks-4215529b08f4)
+
 ## Before getting started
 Before using this project please make sure you get the server side running which can be found [here](https://github.com/zafar-saleem/NodeScalableArchitecture)
 
